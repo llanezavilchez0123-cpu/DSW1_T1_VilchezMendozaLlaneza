@@ -1,0 +1,159 @@
+﻿@model DSW1_T1_VilchezMendozaLlaneza.Models.Libro
+
+@{
+    ViewData["Title"] = "Registrar Libro";
+}
+
+<div class="container py-4">
+
+    <!-- ENCABEZADO -->
+    <div class="mb-4">
+        <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-primary-subtle text-primary px-3 py-2">
+                Gestión de biblioteca
+            </span>
+        </div>
+
+        <h1 class="fw-bold mb-2">
+            Registrar nuevo libro
+        </h1>
+
+        <p class="text-muted">
+            Complete los datos para incorporar un nuevo libro
+            al catálogo de la biblioteca.
+        </p>
+    </div>
+
+    <!-- TARJETA PRINCIPAL -->
+    <div class="card border-0 shadow-sm rounded-4">
+
+        <div class="card-header bg-white border-bottom p-4 rounded-top-4">
+            <h5 class="fw-bold mb-1">
+                Información del libro
+            </h5>
+
+            <p class="text-muted small mb-0">
+                Todos los campos son obligatorios.
+            </p>
+        </div>
+
+        <div class="card-body p-4">
+
+            <form asp-controller="Libro"
+                  asp-action="Crear"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger"
+                     role="alert">
+                </div>
+
+                <div class="row g-4">
+
+                    <!-- NOMBRE DEL LIBRO -->
+                    <div class="col-md-6">
+                        <label asp-for="NombreLibro"
+                               class="form-label fw-semibold">
+                            Nombre del libro
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <input asp-for="NombreLibro"
+                               class="form-control form-control-lg"
+                               placeholder="Ej. Cien años de soledad"
+                               maxlength="120" />
+
+                        <span asp-validation-for="NombreLibro"
+                              class="text-danger small"></span>
+                    </div>
+
+                    <!-- AUTOR -->
+                    <div class="col-md-6">
+                        <label asp-for="Autor"
+                               class="form-label fw-semibold">
+                            Autor
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <input asp-for="Autor"
+                               class="form-control form-control-lg"
+                               placeholder="Ej. Gabriel García Márquez"
+                               maxlength="100" />
+
+                        <span asp-validation-for="Autor"
+                              class="text-danger small"></span>
+                    </div>
+
+                    <!-- EDITORIAL -->
+                    <div class="col-md-6">
+                        <label asp-for="NombreEditorial"
+                               class="form-label fw-semibold">
+                            Editorial
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <input asp-for="NombreEditorial"
+                               class="form-control form-control-lg"
+                               placeholder="Ej. Sudamericana"
+                               maxlength="100" />
+
+                        <span asp-validation-for="NombreEditorial"
+                              class="text-danger small"></span>
+                    </div>
+
+                    <!-- ISDN -->
+                    <div class="col-md-6">
+                        <label asp-for="ISDN"
+                               class="form-label fw-semibold">
+                            Código ISDN
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <input asp-for="ISDN"
+                               class="form-control form-control-lg"
+                               placeholder="Ej. 9780307474728"
+                               maxlength="20" />
+
+                        <span asp-validation-for="ISDN"
+                              class="text-danger small"></span>
+                    </div>
+
+                </div>
+
+                <!-- BOTONES -->
+                <div class="d-flex flex-wrap justify-content-end gap-2
+                    border-top mt-4 pt-4">
+
+                    <a asp-controller="Libro"
+                       asp-action="Index"
+                       class="btn btn-outline-secondary px-4 py-2">
+                        Cancelar
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-primary px-4 py-2">
+                        Guardar libro
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <!-- MENSAJE INFORMATIVO -->
+    <div class="alert alert-info border-0 rounded-3 mt-4">
+        <strong>Información:</strong>
+        El libro será registrado en la base de datos
+        BDBIBLIOTECA2026 y aparecerá automáticamente
+        en el listado de libros.
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

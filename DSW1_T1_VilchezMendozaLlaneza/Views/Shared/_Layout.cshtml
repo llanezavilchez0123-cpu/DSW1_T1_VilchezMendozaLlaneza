@@ -1,0 +1,311 @@
+﻿
+@{
+    string controlador = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    string accion = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+
+    string claseCatalogo = accion == "Index" ? "active" : "";
+    string claseCrear = accion == "Crear" ? "active" : "";
+    string claseBuscar = accion == "BuscarPorAutor" ? "active" : "";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <meta name="description"
+          content="Sistema de gestión bibliotecaria para administrar y consultar libros." />
+
+    <title>@ViewData["Title"] | Biblioteca T1</title>
+
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- ESTILOS PERSONALIZADOS -->
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+    <style>
+        /* ESTRUCTURA PRINCIPAL */
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #f5f7fb;
+            color: #1e293b;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .main-content {
+            flex: 1;
+            width: 100%;
+        }
+
+        /* NAVEGACIÓN */
+        .biblioteca-navbar {
+            background: #111c35;
+            padding: 14px 0;
+            border-bottom: 1px solid #27344e;
+            box-shadow: 0 3px 15px rgba(15, 23, 42, 0.08);
+        }
+
+        .biblioteca-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .biblioteca-brand:hover {
+            color: #ffffff;
+        }
+
+        .brand-icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #4f46e5;
+            color: white;
+            border-radius: 12px;
+            font-size: 23px;
+        }
+
+        .brand-title {
+            display: block;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .brand-subtitle {
+            display: block;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            color: #a5b4cc;
+            text-transform: uppercase;
+        }
+
+        /* ENLACES DEL MENÚ */
+        .biblioteca-navbar .navbar-nav {
+            gap: 8px;
+        }
+
+        .biblioteca-navbar .nav-link {
+            color: #cbd5e1;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 11px 17px;
+            border-radius: 9px;
+            transition: all 0.2s ease;
+        }
+
+        .biblioteca-navbar .nav-link:hover {
+            color: white;
+            background: #25324a;
+        }
+
+        .biblioteca-navbar .nav-link.active {
+            background: #4f46e5;
+            color: #ffffff;
+        }
+
+        .biblioteca-navbar .navbar-toggler {
+            border-color: #475569;
+        }
+
+        .biblioteca-navbar .navbar-toggler:focus {
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+        }
+
+        /* PIE DE PÁGINA */
+        .biblioteca-footer {
+            background: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            padding: 22px 0;
+            margin-top: 45px;
+        }
+
+        .footer-title {
+            font-size: 14px;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        .footer-text {
+            color: #64748b;
+            font-size: 13px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- MENÚ PRINCIPAL -->
+    <header>
+
+        <nav class="navbar navbar-expand-lg navbar-dark biblioteca-navbar">
+
+            <div class="container">
+
+                <!-- LOGOTIPO -->
+                <a class="navbar-brand biblioteca-brand"
+                   asp-controller="Libro"
+                   asp-action="Index">
+
+                    <span class="brand-icon">
+                        &#128218;
+                    </span>
+
+                    <span>
+                        <span class="brand-title">
+                            Biblioteca T1
+                        </span>
+
+                        <span class="brand-subtitle">
+                            Sistema de Gestión
+                        </span>
+                    </span>
+
+                </a>
+
+                <!-- BOTÓN MENÚ MÓVIL -->
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#menuBiblioteca"
+                        aria-controls="menuBiblioteca"
+                        aria-expanded="false"
+                        aria-label="Mostrar menú">
+
+                    <span class="navbar-toggler-icon"></span>
+
+                </button>
+
+                <!-- OPCIONES DE NAVEGACIÓN -->
+                <div class="collapse navbar-collapse"
+                     id="menuBiblioteca">
+
+                    <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                        <!-- CATÁLOGO -->
+                        <li class="nav-item">
+
+                            <a class="nav-link @claseCatalogo"
+                               asp-controller="Libro"
+                               asp-action="Index">
+
+                                Catálogo de libros
+
+                            </a>
+
+                        </li>
+
+                        <!-- REGISTRAR -->
+                        <li class="nav-item">
+
+                            <a class="nav-link @claseCrear"
+                               asp-controller="Libro"
+                               asp-action="Crear">
+
+                                Registrar libro
+
+                            </a>
+
+                        </li>
+
+                        <!-- BUSCAR -->
+                        <li class="nav-item">
+
+                            <a class="nav-link @claseBuscar"
+                               asp-controller="Libro"
+                               asp-action="BuscarPorAutor">
+
+                                Buscar por autor
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+    <!-- CONTENIDO DE CADA VISTA -->
+    <div class="main-content">
+
+        <main role="main">
+
+            @RenderBody()
+
+        </main>
+
+    </div>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="biblioteca-footer">
+
+        <div class="container">
+
+            <div class="d-flex flex-wrap
+                        justify-content-between
+                        align-items-center gap-3">
+
+                <div>
+
+                    <span class="footer-title">
+                        Biblioteca T1
+                    </span>
+
+                    <p class="footer-text mb-0">
+                        Sistema de Gestión Bibliotecaria
+                    </p>
+
+                </div>
+
+                <div class="text-md-end">
+
+                    <span class="footer-text">
+                        Desarrollo de Servicios Web I
+                    </span>
+
+                    <p class="footer-text mb-0">
+                        © @DateTime.Now.Year
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/site.js"
+            asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>

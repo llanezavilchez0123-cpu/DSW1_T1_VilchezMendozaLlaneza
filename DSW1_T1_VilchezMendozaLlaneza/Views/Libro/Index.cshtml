@@ -1,0 +1,334 @@
+﻿@model IEnumerable<DSW1_T1_VilchezMendozaLlaneza.Models.Libro>
+
+@{
+    ViewData["Title"] = "Listado de Libros";
+    int totalLibros = Model.Count();
+}
+
+<div class="container py-4">
+
+    <!-- ENCABEZADO PRINCIPAL -->
+    <div class="d-flex flex-wrap justify-content-between
+        align-items-center gap-3 mb-4">
+
+        <div>
+            <span class="badge bg-primary-subtle text-primary
+                px-3 py-2 mb-3">
+                Gestión de biblioteca
+            </span>
+
+            <h1 class="fw-bold mb-2">
+                Catálogo de libros
+            </h1>
+
+            <p class="text-muted mb-0">
+                Administra los libros registrados
+                en el sistema de biblioteca.
+            </p>
+        </div>
+
+        <a asp-controller="Libro"
+           asp-action="Crear"
+           class="btn btn-primary btn-lg px-4">
+            + Nuevo libro
+        </a>
+
+    </div>
+
+    <!-- MENSAJES DE CONFIRMACIÓN -->
+    @if (ViewBag.Mensaje != null)
+    {
+        <div class="alert alert-success
+            alert-dismissible fade show"
+             role="alert">
+
+            <strong>Operación exitosa:</strong>
+            @ViewBag.Mensaje
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Cerrar">
+            </button>
+        </div>
+    }
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger
+            alert-dismissible fade show"
+             role="alert">
+
+            <strong>Atención:</strong>
+            @ViewBag.Error
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Cerrar">
+            </button>
+        </div>
+    }
+
+    <!-- TARJETA DE ESTADÍSTICA -->
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex align-items-center gap-3">
+
+                        <div class="bg-primary-subtle
+                            text-primary rounded-3
+                            d-flex align-items-center
+                            justify-content-center"
+                             style="width:60px;height:60px;
+                            font-size:28px;">
+                            &#128218;
+                        </div>
+
+                        <div>
+                            <p class="text-muted small mb-1">
+                                Total de libros registrados
+                            </p>
+
+                            <h2 class="fw-bold mb-0">
+                                @totalLibros
+                            </h2>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-8">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body p-4">
+
+                    <h5 class="fw-bold mb-2">
+                        Administración del catálogo
+                    </h5>
+
+                    <p class="text-muted small mb-3">
+                        Registra, actualiza, consulta y elimina
+                        los libros de la biblioteca.
+                    </p>
+
+                    <a asp-controller="Libro"
+                       asp-action="BuscarPorAutor"
+                       class="btn btn-outline-primary">
+                        Buscar libros por autor
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- TARJETA DEL LISTADO -->
+    <div class="card border-0 shadow-sm rounded-4">
+
+        <div class="card-header bg-white
+            border-0 p-4 pb-3">
+
+            <div class="d-flex flex-wrap
+                justify-content-between
+                align-items-center gap-3">
+
+                <div>
+                    <h5 class="fw-bold mb-1">
+                        Libros registrados
+                    </h5>
+
+                    <p class="text-muted small mb-0">
+                        Consulta y administra la información
+                        de todos los libros.
+                    </p>
+                </div>
+
+                <span class="badge bg-primary-subtle
+                    text-primary rounded-pill
+                    px-3 py-2">
+                    @totalLibros registros
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="card-body p-0">
+
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+
+                    <table class="table table-hover
+                        align-middle mb-0">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th class="ps-4">ID</th>
+                                <th>Nombre del libro</th>
+                                <th>Autor</th>
+                                <th>Editorial</th>
+                                <th>ISDN</th>
+                                <th class="text-center">
+                                    Acciones
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var libro in Model)
+                            {
+                                <tr>
+
+                                    <!-- ID -->
+                                    <td class="ps-4">
+                                        <span class="badge
+                                            bg-light text-dark
+                                            border">
+                                            #@libro.Id
+                                        </span>
+                                    </td>
+
+                                    <!-- NOMBRE DEL LIBRO -->
+                                    <td>
+                                        <span class="fw-semibold">
+                                            @libro.NombreLibro
+                                        </span>
+                                    </td>
+
+                                    <!-- AUTOR -->
+                                    <td>
+                                        @libro.Autor
+                                    </td>
+
+                                    <!-- EDITORIAL -->
+                                    <td class="text-muted">
+                                        @libro.NombreEditorial
+                                    </td>
+
+                                    <!-- ISDN -->
+                                    <td>
+                                        <span class="font-monospace small">
+                                            @libro.ISDN
+                                        </span>
+                                    </td>
+
+                                    <!-- ACCIONES -->
+                                    <td>
+
+                                        <div class="d-flex
+                                            justify-content-center
+                                            align-items-center
+                                            gap-2">
+
+                                            <!-- EDITAR -->
+                                            <a asp-controller="Libro"
+                                               asp-action="Editar"
+                                               asp-route-id="@libro.Id"
+                                               class="btn btn-outline-primary
+                                                btn-sm px-3">
+                                                Editar
+                                            </a>
+
+                                            <!-- ELIMINAR -->
+                                            <form asp-controller="Libro"
+                                                  asp-action="Eliminar"
+                                                  method="post"
+                                                  class="d-inline"
+                                                  onsubmit="return confirm('¿Está seguro de eliminar este libro?');">
+
+                                                @Html.AntiForgeryToken()
+
+                                                <input type="hidden"
+                                                       name="id"
+                                                       value="@libro.Id" />
+
+                                                <button type="submit"
+                                                        class="btn btn-outline-danger
+                                                    btn-sm px-3">
+                                                    Eliminar
+                                                </button>
+
+                                            </form>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+            else
+            {
+                <!-- ESTADO SIN LIBROS -->
+                <div class="text-center px-4 py-5">
+
+                    <div class="mb-3"
+                         style="font-size:48px;">
+                        &#128218;
+                    </div>
+
+                    <h5 class="fw-bold mb-2">
+                        No hay libros registrados
+                    </h5>
+
+                    <p class="text-muted mb-4">
+                        Comienza registrando tu primer libro
+                        para visualizarlo en el catálogo.
+                    </p>
+
+                    <a asp-controller="Libro"
+                       asp-action="Crear"
+                       class="btn btn-primary px-4">
+                        Registrar primer libro
+                    </a>
+
+                </div>
+            }
+
+        </div>
+
+        <!-- PIE DE TABLA -->
+        <div class="card-footer bg-white
+            border-0 p-4">
+
+            <div class="d-flex flex-wrap
+                justify-content-between
+                align-items-center gap-2">
+
+                <span class="text-muted small">
+                    Mostrando @totalLibros libro(s)
+                    registrados.
+                </span>
+
+                <span class="text-muted small">
+                    Sistema de Gestión Bibliotecaria
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
